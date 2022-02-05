@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     @IBOutlet private weak var weatherImage: UIImageView!
     @IBOutlet private weak var temperatureLabel: UILabel!
     @IBOutlet private weak var locationLabel: UILabel!
+    @IBOutlet weak var updateButton: UIButton!
     
     var locationManager: CLLocationManager?
     var weatherManager: WeatherManager?
@@ -29,6 +30,15 @@ class ViewController: UIViewController {
         debugPrint("weather added?")
         
     }
+    
+    @IBAction private func gg() {
+        didUpdateWeather(weatherManager!, weather: WeatherData(coord: Coordinates(lon: 70,
+                                                                                  lat: 70),
+                                                               weather: [Weather(id: 10,
+                                                                                 main: "cloudy",
+                                                                                 description: "fuck")],
+                                                               main: Main(temp: 60, feels_like: 69, temp_min: 95, temp_max: 69, pressure: 88), wind: Wind(speed: 55, deg: 4), id: 1, name: "Moscow"))
+    }
 }
 
 extension ViewController: CLLocationManagerDelegate {
@@ -37,7 +47,7 @@ extension ViewController: CLLocationManagerDelegate {
 
 extension ViewController: WeatherManagerDelegate {
     func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherData?) {
-        temperatureLabel.text = String(describing: weather?.main.temp) + " °C"
+        temperatureLabel.text = String(weather?.main.temp ?? 0) + " °C"
         locationLabel.text = weather?.name
     }
     

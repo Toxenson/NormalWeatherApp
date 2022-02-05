@@ -54,6 +54,15 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="65i-EK-ef6">
+                                <rect key="frame" x="158" y="250" width="67" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Button"/>
+                                <connections>
+                                    <action selector="gg" destination="BYZ-38-t0r" eventType="touchUpInside" id="N9Q-M8-HeE"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -71,6 +80,7 @@
                     <connections>
                         <outlet property="locationLabel" destination="Ya0-vc-brN" id="DTV-Bc-3q1"/>
                         <outlet property="temperatureLabel" destination="k8h-5Q-CR5" id="ZzP-QS-tjt"/>
+                        <outlet property="updateButton" destination="65i-EK-ef6" id="v6a-O4-7sZ"/>
                         <outlet property="weatherImage" destination="yYF-Pd-kSL" id="JGN-L2-RPR"/>
                     </connections>
                 </viewController>

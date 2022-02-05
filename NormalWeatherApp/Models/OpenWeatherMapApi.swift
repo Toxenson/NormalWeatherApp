@@ -16,18 +16,34 @@ struct OpenWeatherMapApi: WeatherService {
     private let weatherURL = "https://api.openweathermap.org/data/2.5/weather?appid=c8c3760b8e5d406a8a129e05c43e8d3f&units=metric"
     
     func getWeather(from coord: Coordinates) -> WeatherData? {
+        var weatherData: WeatherData?
         let finalUrl = weatherURL + "&lat=\(coord.lat)" + "&lon=\(coord.lon)"
         debugPrint("weather adding via coordinates")
-        return performRequest(with: finalUrl)
+        performRequest(with: finalUrl) { weather, error in
+            if weather != nil {
+                weatherData = weather
+            } else {
+                debugPrint(error ?? "fuck")
+            }
+        }
+        return weatherData
     }
     
     func getWeather(from cityName: String) -> WeatherData? {
+        var weatherData: WeatherData?
         let finalUrl = weatherURL + "&q=\(cityName)"
         debugPrint("weather adding via city")
-        return performRequest(with: finalUrl)
+        performRequest(with: finalUrl) { weather, error in
+            if weather != nil {
+                weatherData = weather
+            } else {
+                debugPrint(error ?? "fuck")
+            }
+        }
+        return weatherData
     }
     
-    private func performRequest(with urlString: String) -> WeatherData? {
+    private func performRequest(with urlString: String, completition: @escaping (WeatherData?, Error?) -> ()) -> WeatherData? {
         debugPrint("performing request")
         var weather: WeatherData?
         let urlRequest = URLRequest(url: URL(string: urlString)!,
@@ -41,12 +57,16 @@ struct OpenWeatherMapApi: WeatherService {
             case 200:
                 debugPrint("parsing json")
                 weather = parseJson(from: data!)
+                DispatchQueue.main.async() {
+                    completition(weather, error)
+                }
+//                completition(weather, error)
             default:
                 debugPrint("http error")
                 break
             }
         }.resume()
-        debugPrint("")
+        debugPrint("request performed")
         return weather
     }
     
