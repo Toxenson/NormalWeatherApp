@@ -30,12 +30,10 @@ class WeatherManager {
                 weatherList?.append(weather)
                 delegate?.didUpdateWeather(self, weather: weather)
             }
-//            weatherList?.append(weather)
             debugPrint("weather added via coordinates")
         default:
             debugPrint("wrong place")
         }
-//        delegate?.didUpdateWeather(self, weather: weatherList?[0])
     }
     func deleteWeather(id: Int) {
         
