@@ -11,35 +11,45 @@ protocol WeatherModelProtocol {
     
 }
 
-struct Coordinates {
-    let latitude: Double
-    let longitude: Double
+struct Coordinates: Codable {
+    let lon: Double
+    let lat: Double
 }
 
-struct Wind {
+struct Weather: Codable {
+    let id: Int
+    let main: String
+    let description: String
+}
+
+struct Main : Codable {
+    let temp: Double
+    let feelsLike: Double
+    let tempMin: Double
+    let tempMax: Double
+    let pressure: Int
+}
+
+struct Wind: Codable {
     let speed: Double
     let degrees: Int
 }
 
-struct Weather {
+struct WeatherData: Codable {
     let coords: Coordinates
+    let weather: [Weather]
     let city: String?
-    let weatherType: String
-    let weatherDescription: String
-    let temperature: Double
-    let temperatureMin: Double
-    let temperatureMax: Double
-    let temperatureFeelsLike: Double
-    let pressurre: Double
+    let main: Main
     let wind: Wind
+    let id: Int
 }
 
 struct WeatherModel {
-    var weatherList: [Weather]?
+    var weatherList: [WeatherData]?
 //    var delegate: WeatherModelProtocol?
     
     mutating func appendWeatherList(from jsonObject: Data){
-        weatherList?.append(Weather(coords: Coordinates(latitude: 50, longitude: 50),
+        weatherList?.append(WeatherData(coords: Coordinates(latitude: 50, longitude: 50),
                                     city: "govno",
                                     weatherType: "cloudy",
                                     weatherDescription: "fuck",
