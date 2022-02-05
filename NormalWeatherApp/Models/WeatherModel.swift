@@ -24,40 +24,23 @@ struct Weather: Codable {
 
 struct Main : Codable {
     let temp: Double
-    let feelsLike: Double
-    let tempMin: Double
-    let tempMax: Double
+    let feels_like: Double
+    let temp_min: Double
+    let temp_max: Double
     let pressure: Int
 }
 
 struct Wind: Codable {
     let speed: Double
-    let degrees: Int
+    let deg: Int
 }
 
 struct WeatherData: Codable {
-    let coords: Coordinates
+    let coord: Coordinates
     let weather: [Weather]
-    let city: String?
     let main: Main
     let wind: Wind
     let id: Int
+    let name: String
 }
 
-struct WeatherModel {
-    var weatherList: [WeatherData]?
-//    var delegate: WeatherModelProtocol?
-    
-    mutating func appendWeatherList(from jsonObject: Data){
-        weatherList?.append(WeatherData(coords: Coordinates(latitude: 50, longitude: 50),
-                                    city: "govno",
-                                    weatherType: "cloudy",
-                                    weatherDescription: "fuck",
-                                    temperature: 10,
-                                    temperatureMin: 9,
-                                    temperatureMax: 11,
-                                    temperatureFeelsLike: 10,
-                                    pressurre: 40,
-                                    wind: Wind(speed: 100, degrees: 0)))
-    }
-}

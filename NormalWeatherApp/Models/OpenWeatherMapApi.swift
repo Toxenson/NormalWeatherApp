@@ -15,65 +15,75 @@ protocol WeatherService {
 struct OpenWeatherMapApi: WeatherService {
     private let weatherURL = "https://api.openweathermap.org/data/2.5/weather?appid=c8c3760b8e5d406a8a129e05c43e8d3f&units=metric"
     
-    func getWeather(from coord: Coordinates) -> WeatherData?{
+    func getWeather(from coord: Coordinates) -> WeatherData? {
         let finalUrl = weatherURL + "&lat=\(coord.lat)" + "&lon=\(coord.lon)"
+        debugPrint("weather adding via coordinates")
         return performRequest(with: finalUrl)
     }
     
-    func getWeather(from cityName: String) -> WeatherData?{
+    func getWeather(from cityName: String) -> WeatherData? {
         let finalUrl = weatherURL + "&q=\(cityName)"
+        debugPrint("weather adding via city")
         return performRequest(with: finalUrl)
     }
     
-    private func performRequest(with urlString: String) -> WeatherData?{
+    private func performRequest(with urlString: String) -> WeatherData? {
+        debugPrint("performing request")
         var weather: WeatherData?
         let urlRequest = URLRequest(url: URL(string: urlString)!,
                                     cachePolicy: .reloadIgnoringLocalCacheData,
-                                    timeoutInterval: 0.5)
+                                    timeoutInterval: 30)
         let session = URLSession(configuration: .default)
         session.dataTask(with: urlRequest) {
             data, urlResponse, error in
             let statusCode = (urlResponse as! HTTPURLResponse).statusCode
             switch statusCode {
             case 200:
+                debugPrint("parsing json")
                 weather = parseJson(from: data!)
             default:
+                debugPrint("http error")
                 break
             }
-        }
+        }.resume()
+        debugPrint("")
+        return weather
     }
     
-    private func parseJson(from json: Data) -> WeatherData?{
+    private func parseJson(from json: Data) -> WeatherData? {
         let decoder = JSONDecoder()
+        debugPrint("also parsing json")
         do {
             let decodedData = try decoder.decode(WeatherData.self, from: json)
-            let coords = decodedData.coords
+            let coords = decodedData.coord
             let weatherId = decodedData.weather[0].id
             let weatherMain = decodedData.weather[0].main
             let weatherDescription = decodedData.weather[0].description
-            let city = decodedData.city
+            let city = decodedData.name
             let mainTemp = decodedData.main.temp
-            let mainTempFeelsLike = decodedData.main.feelsLike
-            let mainTempMax = decodedData.main.tempMax
-            let mainTempMin = decodedData.main.tempMin
+            let mainTempFeelsLike = decodedData.main.feels_like
+            let mainTempMax = decodedData.main.temp_max
+            let mainTempMin = decodedData.main.temp_min
             let mainPressure = decodedData.main.pressure
             let windSpeed = decodedData.wind.speed
-            let windDeg = decodedData.wind.degrees
+            let windDeg = decodedData.wind.deg
             let id = decodedData.id
-            return WeatherData(coords: coords,
+            debugPrint("json parsed")
+            return WeatherData(coord: coords,
                                weather: [Weather(id: weatherId,
                                                  main: weatherMain,
                                                  description: weatherDescription)],
-                               city: city,
                                main: Main(temp: mainTemp,
-                                          feelsLike: mainTempFeelsLike,
-                                          tempMin: mainTempMin,
-                                          tempMax: mainTempMax,
+                                          feels_like: mainTempFeelsLike,
+                                          temp_min: mainTempMin,
+                                          temp_max: mainTempMax,
                                           pressure: mainPressure),
                                wind: Wind(speed: windSpeed,
-                                          degrees: windDeg),
-                               id: id)
+                                          deg: windDeg),
+                               id: id,
+                               name: city)
         } catch {
+            debugPrint("wrong weather")
             return nil
         }
     }

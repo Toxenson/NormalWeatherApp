@@ -20,8 +20,14 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        weatherManager = WeatherManager()
         locationManager?.delegate = self
         weatherManager?.delegate = self
+        
+        debugPrint("adding weather")
+        weatherManager?.addWeather(for: "Moscow")
+        debugPrint("weather added?")
+        
     }
 }
 
@@ -30,5 +36,14 @@ extension ViewController: CLLocationManagerDelegate {
 }
 
 extension ViewController: WeatherManagerDelegate {
+    func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherData?) {
+        temperatureLabel.text = String(describing: weather?.main.temp) + " °C"
+        locationLabel.text = weather?.name
+    }
+    
+    func didFailWithError(_ error: Error) {
+        debugPrint(error)
+    }
+    
     
 }

@@ -44,7 +44,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ya0-vc-brN">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ya0-vc-brN" userLabel="Location Label">
                                 <rect key="frame" x="267" y="145" width="71" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="71" id="cme-gV-BDe"/>
@@ -69,7 +69,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="locaationLabel" destination="Ya0-vc-brN" id="Kyr-cv-0Hb"/>
+                        <outlet property="locationLabel" destination="Ya0-vc-brN" id="DTV-Bc-3q1"/>
                         <outlet property="temperatureLabel" destination="k8h-5Q-CR5" id="ZzP-QS-tjt"/>
                         <outlet property="weatherImage" destination="yYF-Pd-kSL" id="JGN-L2-RPR"/>
                     </connections>
