@@ -26,6 +26,7 @@ struct OpenWeatherMapApi: WeatherService {
     }
     
     private func performRequest(with urlString: String) -> WeatherData?{
+        var weather: WeatherData?
         let urlRequest = URLRequest(url: URL(string: urlString)!,
                                     cachePolicy: .reloadIgnoringLocalCacheData,
                                     timeoutInterval: 0.5)
@@ -33,11 +34,11 @@ struct OpenWeatherMapApi: WeatherService {
         session.dataTask(with: urlRequest) {
             data, urlResponse, error in
             let statusCode = (urlResponse as! HTTPURLResponse).statusCode
-            if statusCode == 200 {
-                let safeData = data!
-                return parseJson(from: safeData)
-            } else {
-                return nil
+            switch statusCode {
+            case 200:
+                weather = parseJson(from: data!)
+            default:
+                break
             }
         }
     }
