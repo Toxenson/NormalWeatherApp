@@ -8,69 +8,54 @@
 import Foundation
 
 protocol WeatherService {
-    func getWeather(from coord: Coordinates) -> WeatherData?
-    func getWeather(from cityName: String) -> WeatherData?
+    func getWeather(from coord: Coordinates, completition: @escaping (WeatherData?) -> ())
+    func getWeather(from cityName: String, completition: @escaping (WeatherData?) -> ())
 }
 
 struct OpenWeatherMapApi: WeatherService {
     private let weatherURL = "https://api.openweathermap.org/data/2.5/weather?appid=c8c3760b8e5d406a8a129e05c43e8d3f&units=metric"
     
-    func getWeather(from coord: Coordinates) -> WeatherData? {
-        var weatherData: WeatherData?
+    func getWeather(from coord: Coordinates, completition: @escaping (WeatherData?) -> ()) {
         let finalUrl = weatherURL + "&lat=\(coord.lat)" + "&lon=\(coord.lon)"
         debugPrint("weather adding via coordinates")
-        performRequest(with: finalUrl) { weather, error in
-            if weather != nil {
-                weatherData = weather
-            } else {
-                debugPrint(error ?? "fuck")
-            }
+        performRequest(with: finalUrl) { weather in
+            completition(weather)
         }
-        return weatherData
     }
     
-    func getWeather(from cityName: String) -> WeatherData? {
-        var weatherData: WeatherData?
+    func getWeather(from cityName: String, completition: @escaping (WeatherData?) -> ()) {
         let finalUrl = weatherURL + "&q=\(cityName)"
         debugPrint("weather adding via city")
-        performRequest(with: finalUrl) { weather, error in
-            if weather != nil {
-                weatherData = weather
-            } else {
-                debugPrint(error ?? "fuck")
-            }
+        performRequest(with: finalUrl) { weather in
+            completition(weather)
         }
-        return weatherData
+//        return nil
     }
     
-    private func performRequest(with urlString: String, completition: @escaping (WeatherData?, Error?) -> ()) -> WeatherData? {
+    private func performRequest(with urlString: String, completition: @escaping (WeatherData?) -> ()){
         debugPrint("performing request")
-        var weather: WeatherData?
         let urlRequest = URLRequest(url: URL(string: urlString)!,
                                     cachePolicy: .reloadIgnoringLocalCacheData,
                                     timeoutInterval: 30)
-        URLSession(configuration: .default).dataTask(with: urlRequest) {
+        URLSession.shared.dataTask(with: urlRequest) {
             data, urlResponse, error in
-            let callback: (WeatherData?, Error?) -> () = {data, error in
-                DispatchQueue.main.async() {
-                    completition(weather, error)
+            let callbackMainThread: (WeatherData?) -> () = { weather in
+                DispatchQueue.main.async {
+                    completition(weather)
                 }
             }
             let statusCode = (urlResponse as! HTTPURLResponse).statusCode
             switch statusCode {
             case 200:
                 debugPrint("parsing json")
-                weather = parseJson(from: data!)
-                
-//                completition(weather, error)
+                callbackMainThread(parseJson(from: data!))
             default:
                 debugPrint("http error")
                 break
             }
-            callback(weather, error)
         }.resume()
         debugPrint("request performed")
-        return weather
+//        return weather
     }
     
     private func parseJson(from json: Data) -> WeatherData? {

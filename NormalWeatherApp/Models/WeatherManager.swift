@@ -12,27 +12,32 @@ protocol WeatherManagerDelegate {
     func didFailWithError(_ error: Error)
 }
 
-struct WeatherManager {
+class WeatherManager {
     var delegate: WeatherManagerDelegate?
     var weatherList: [WeatherData?]?
     let weatherDatabase: WeatherService = OpenWeatherMapApi()
     
-    mutating func addWeather(for place: Any) {
+    func addWeather(for place: Any) {
         switch place {
         case let someCity as String:
-            let weather = weatherDatabase.getWeather(from: someCity)
-            weatherList?.append(weather)
+            weatherDatabase.getWeather(from: someCity) { [unowned self] weather in
+                weatherList?.append(weather)
+                delegate?.didUpdateWeather(self, weather: weather)
+            }
             debugPrint("weather added via city")
         case let someCoords as Coordinates:
-            let weather = weatherDatabase.getWeather(from: someCoords)
-            weatherList?.append(weather)
+            weatherDatabase.getWeather(from: someCoords) { [unowned self] weather in
+                weatherList?.append(weather)
+                delegate?.didUpdateWeather(self, weather: weather)
+            }
+//            weatherList?.append(weather)
             debugPrint("weather added via coordinates")
         default:
             debugPrint("wrong place")
         }
-        delegate?.didUpdateWeather(self, weather: weatherList?[0])
+//        delegate?.didUpdateWeather(self, weather: weatherList?[0])
     }
-    mutating func deleteWeather(id: Int) {
+    func deleteWeather(id: Int) {
         
     }
 }
