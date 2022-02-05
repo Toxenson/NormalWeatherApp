@@ -49,22 +49,25 @@ struct OpenWeatherMapApi: WeatherService {
         let urlRequest = URLRequest(url: URL(string: urlString)!,
                                     cachePolicy: .reloadIgnoringLocalCacheData,
                                     timeoutInterval: 30)
-        let session = URLSession(configuration: .default)
-        session.dataTask(with: urlRequest) {
+        URLSession(configuration: .default).dataTask(with: urlRequest) {
             data, urlResponse, error in
+            let callback: (WeatherData?, Error?) -> () = {data, error in
+                DispatchQueue.main.async() {
+                    completition(weather, error)
+                }
+            }
             let statusCode = (urlResponse as! HTTPURLResponse).statusCode
             switch statusCode {
             case 200:
                 debugPrint("parsing json")
                 weather = parseJson(from: data!)
-                DispatchQueue.main.async() {
-                    completition(weather, error)
-                }
+                
 //                completition(weather, error)
             default:
                 debugPrint("http error")
                 break
             }
+            callback(weather, error)
         }.resume()
         debugPrint("request performed")
         return weather
