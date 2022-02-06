@@ -7,9 +7,6 @@
 
 import UIKit
 import CoreLocation
-import CoreLocationUI
-
-
 
 class ViewController: UIViewController {
     
@@ -29,19 +26,25 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupWeatherManager()
+        setupLocationManager()
+    }
+    
+    private func setupWeatherManager() {
         weatherManager = WeatherManager()
+        weatherManager?.delegate = self
+    }
+    
+    private func setupLocationManager() {
         locationManager = CLLocationManager()
         locationManager?.delegate = self
-        weatherManager?.delegate = self
         
         locationManager?.requestWhenInUseAuthorization()
         locationManager?.requestLocation()
-//        weatherManager?.addWeather(for: "Gilgit-Baltistan")
-        
     }
     
     //MARK: - LifeCycle
-    @IBAction private func gg() {
+    @IBAction private func test__get_new_coord__when_tap_on_button() {
         weatherManager?.addWeather(for: Coordinates(
             lon: CLLocationDegrees(exactly: Float.random(in: 10...100)),
             lat: CLLocationDegrees(exactly: Float.random(in: 10...100))))
@@ -60,7 +63,6 @@ class ViewController: UIViewController {
         }
         locationTextField.text = ""
     }
-    
 }
 
 //MARK: - Delegates

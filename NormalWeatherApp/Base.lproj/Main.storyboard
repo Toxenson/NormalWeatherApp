@@ -43,7 +43,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Button"/>
                                 <connections>
-                                    <action selector="gg" destination="BYZ-38-t0r" eventType="touchUpInside" id="N9Q-M8-HeE"/>
+                                    <action selector="test__get_new_coord__when_tap_on_button" destination="BYZ-38-t0r" eventType="touchUpInside" id="N9Q-M8-HeE"/>
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="2a6-EX-W4k">

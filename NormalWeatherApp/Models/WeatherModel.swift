@@ -5,7 +5,6 @@
 //  Created by Тоха on 04.02.2022.
 //
 
-import Foundation
 import CoreLocation
 
 protocol WeatherModelProtocol {

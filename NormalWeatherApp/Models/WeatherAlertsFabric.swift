@@ -5,10 +5,9 @@
 //  Created by Тоха on 06.02.2022.
 //
 
-import Foundation
 import UIKit
 
-struct AlertsFabric {
+struct WeatherAlertsFabric {
     static func getWarningAlert(title: String, message: String) -> UIViewController {
         let alertController = UIAlertController(title: title,
                                                 message: message,

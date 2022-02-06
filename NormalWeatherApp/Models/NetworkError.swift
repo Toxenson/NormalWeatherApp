@@ -5,27 +5,26 @@
 //  Created by Тоха on 06.02.2022.
 //
 
-import Foundation
 import UIKit
 
-enum Errors: Error {
+enum NetworkErrors: Error {
     case emptyCity
-    case httpError(id: Int, message: String)
+    case httpError(NetworkError)
     case emptyCoordinates
     case failedUrl
     case cantConvertResponse
     case unsafeData
 }
 
-struct HttpErrors: Codable{
+struct NetworkError: Codable {
     let cod: Int
     let message: String
     
-    static func parseJson(from json: Data) -> HttpErrors? {
+    static func parseJson(from json: Data) -> NetworkError? {
         debugPrint("also parsing json")
         do {
             debugPrint("json parsed")
-            return try JSONDecoder().decode(HttpErrors.self, from: json)
+            return try JSONDecoder().decode(NetworkError.self, from: json)
         } catch {
             return nil
         }

@@ -5,7 +5,6 @@
 //  Created by Тоха on 05.02.2022.
 //
 
-import Foundation
 import UIKit
 
 protocol WeatherManagerDelegate {
@@ -52,19 +51,19 @@ class WeatherManager {
         
     }
     
-    private func errorHandler(_ error: Errors) {
+    private func errorHandler(_ error: NetworkErrors) {
         switch error {
         case .emptyCity:
-            delegate?.didFailWithError(AlertsFabric.getWarningAlert(title: "Wrong city",
+            delegate?.didFailWithError(WeatherAlertsFabric.getWarningAlert(title: "Wrong city",
                                                                     message: "Ops, you typed nonexistent city"))
-        case .httpError(let id, let message):
-            delegate?.didFailWithError(AlertsFabric.getWarningAlert(title: "HTTP Error",
-                                                                    message: "Id: \(id).\nMessage: \(message)"))
+        case .httpError(let networkError):
+            delegate?.didFailWithError(WeatherAlertsFabric.getWarningAlert(title: "HTTP Error",
+                                                                           message: "Id: \(networkError.cod).\nMessage: \(networkError.message)"))
         case .emptyCoordinates:
-            delegate?.didFailWithError(AlertsFabric.getWarningAlert(title: "Wrong coordinates",
+            delegate?.didFailWithError(WeatherAlertsFabric.getWarningAlert(title: "Wrong coordinates",
                                                                     message: "Ops, you are on nonexistent coordinates"))
         default:
-            delegate?.didFailWithError(AlertsFabric.getWarningAlert(title: "Ops",
+            delegate?.didFailWithError(WeatherAlertsFabric.getWarningAlert(title: "Ops",
                                                                     message: "Something goes wrong"))
         }
     }
