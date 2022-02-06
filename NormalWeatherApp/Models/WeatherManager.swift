@@ -15,7 +15,7 @@ protocol WeatherManagerDelegate {
 class WeatherManager {
     var delegate: WeatherManagerDelegate?
     var weatherList: [WeatherData?]?
-    let weatherDatabase: WeatherService = OpenWeatherMapApi()
+    let weatherDatabase: WeatherService = WeatherServiceImpl()
     
     func addWeather(for place: Any) {
         switch place {

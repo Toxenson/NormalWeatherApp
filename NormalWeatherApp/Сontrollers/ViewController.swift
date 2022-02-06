@@ -35,13 +35,19 @@ class ViewController: UIViewController {
     }
     
     @IBAction private func gg() {
-//        didUpdateWeather(weatherManager!, weather: WeatherData(coord: Coordinates(lon: 70,
-//                                                                                  lat: 70),
-//                                                               weather: [Weather(id: 10,
-//                                                                                 main: "cloudy",
-//                                                                                 description: "fuck")],
-//                                                               main: Main(temp: 60, feels_like: 69, temp_min: 95, temp_max: 69, pressure: 88), wind: Wind(speed: 55, deg: 4), id: 1, name: "Moscow"))
         weatherManager?.addWeather(for: "Saratov")
+        let alertController = UIAlertController(title: "HTTP Error occured",
+                                      message: "*An Error message*",
+                                      preferredStyle: .alert)
+        
+        let alertAction = UIAlertAction(title: "Ok",
+                                        style: .default,
+                                        handler: nil)
+        
+        alertController.addAction(alertAction)
+        present(alertController,
+                animated: true,
+                completion: nil)
     }
 }
 

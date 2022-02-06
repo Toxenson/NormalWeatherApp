@@ -12,31 +12,32 @@ protocol WeatherService {
     func getWeather(from cityName: String, completition: @escaping (WeatherData?) -> ())
 }
 
-struct OpenWeatherMapApi: WeatherService {
+struct WeatherServiceImpl: WeatherService {
     private let weatherURL = "https://api.openweathermap.org/data/2.5/weather?appid=c8c3760b8e5d406a8a129e05c43e8d3f&units=metric"
+    private let defaultURL = URL(string: "https://api.openweathermap.org/data/2.5/weather?appid=c8c3760b8e5d406a8a129e05c43e8d3f&units=metric&q=Moscow")!
     
     func getWeather(from coord: Coordinates, completition: @escaping (WeatherData?) -> ()) {
-        let finalUrl = weatherURL + "&lat=\(coord.lat)" + "&lon=\(coord.lon)"
+        let finalUrl = URL(string: weatherURL + "&lat=\(coord.lat)" + "&lon=\(coord.lon)")
         debugPrint("weather adding via coordinates")
-        performRequest(with: finalUrl) { weather in
+        performRequest(with: finalUrl ?? defaultURL) { weather in
             completition(weather)
         }
     }
     
     func getWeather(from cityName: String, completition: @escaping (WeatherData?) -> ()) {
-        let finalUrl = weatherURL + "&q=\(cityName)"
+        let finalUrl = URL(string: weatherURL + "&q=\(cityName)")
         debugPrint("weather adding via city")
-        performRequest(with: finalUrl) { weather in
+        performRequest(with: finalUrl ?? defaultURL) { weather in
             completition(weather)
         }
-//        return nil
     }
     
-    private func performRequest(with urlString: String, completition: @escaping (WeatherData?) -> ()){
-        debugPrint("performing request")
-        let urlRequest = URLRequest(url: URL(string: urlString)!,
-                                    cachePolicy: .reloadIgnoringLocalCacheData,
-                                    timeoutInterval: 30)
+    private func performRequest(with url: URL, completition: @escaping (WeatherData?) -> ()) {
+        debugPrint("start session")
+        let urlRequest = URLRequest(
+            url: url,
+            cachePolicy: .reloadIgnoringLocalCacheData,
+            timeoutInterval: 30)
         URLSession.shared.dataTask(with: urlRequest) {
             data, urlResponse, error in
             let callbackMainThread: (WeatherData?) -> () = { weather in
@@ -54,8 +55,7 @@ struct OpenWeatherMapApi: WeatherService {
                 break
             }
         }.resume()
-        debugPrint("request performed")
-//        return weather
+        debugPrint("sessin resumed")
     }
     
     private func parseJson(from json: Data) -> WeatherData? {
@@ -63,19 +63,19 @@ struct OpenWeatherMapApi: WeatherService {
         debugPrint("also parsing json")
         do {
             let decodedData = try decoder.decode(WeatherData.self, from: json)
-            let coords = decodedData.coord
-            let weatherId = decodedData.weather[0].id
-            let weatherMain = decodedData.weather[0].main
+            let coords             = decodedData.coord
+            let weatherId          = decodedData.weather[0].id
+            let weatherMain        = decodedData.weather[0].main
             let weatherDescription = decodedData.weather[0].description
-            let city = decodedData.name
-            let mainTemp = decodedData.main.temp
-            let mainTempFeelsLike = decodedData.main.feels_like
-            let mainTempMax = decodedData.main.temp_max
-            let mainTempMin = decodedData.main.temp_min
-            let mainPressure = decodedData.main.pressure
-            let windSpeed = decodedData.wind.speed
-            let windDeg = decodedData.wind.deg
-            let id = decodedData.id
+            let city               = decodedData.name
+            let mainTemp           = decodedData.main.temp
+            let mainTempFeelsLike  = decodedData.main.feels_like
+            let mainTempMax        = decodedData.main.temp_max
+            let mainTempMin        = decodedData.main.temp_min
+            let mainPressure       = decodedData.main.pressure
+            let windSpeed          = decodedData.wind.speed
+            let windDeg            = decodedData.wind.deg
+            let id                 = decodedData.id
             debugPrint("json parsed")
             return WeatherData(coord: coords,
                                weather: [Weather(id: weatherId,
