@@ -42,5 +42,18 @@ struct WeatherData: Codable {
     let wind: Wind
     let id: Int
     let name: String
+    
+    static func parseJson(from json: Data) -> WeatherData? {
+        debugPrint("also parsing json")
+        do {
+            debugPrint("json parsed")
+            return try JSONDecoder().decode(WeatherData.self, from: json)
+        } catch {
+            debugPrint("wrong weather")
+            return nil
+        }
+    }
 }
+
+
 

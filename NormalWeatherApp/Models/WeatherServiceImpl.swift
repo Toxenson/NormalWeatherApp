@@ -45,11 +45,15 @@ struct WeatherServiceImpl: WeatherService {
                     completition(weather)
                 }
             }
-            let statusCode = (urlResponse as! HTTPURLResponse).statusCode
-            switch statusCode {
+            guard let httpResponse = urlResponse as? HTTPURLResponse else {
+                debugPrint("fuck")
+                return
+            }
+            
+            switch httpResponse.statusCode {
             case 200:
                 debugPrint("parsing json")
-                callbackMainThread(parseJson(from: data!))
+                callbackMainThread(WeatherData.parseJson(from: data!))
             default:
                 debugPrint("http error")
                 break
@@ -58,42 +62,5 @@ struct WeatherServiceImpl: WeatherService {
         debugPrint("sessin resumed")
     }
     
-    private func parseJson(from json: Data) -> WeatherData? {
-        let decoder = JSONDecoder()
-        debugPrint("also parsing json")
-        do {
-            let decodedData = try decoder.decode(WeatherData.self, from: json)
-            let coords             = decodedData.coord
-            let weatherId          = decodedData.weather[0].id
-            let weatherMain        = decodedData.weather[0].main
-            let weatherDescription = decodedData.weather[0].description
-            let city               = decodedData.name
-            let mainTemp           = decodedData.main.temp
-            let mainTempFeelsLike  = decodedData.main.feels_like
-            let mainTempMax        = decodedData.main.temp_max
-            let mainTempMin        = decodedData.main.temp_min
-            let mainPressure       = decodedData.main.pressure
-            let windSpeed          = decodedData.wind.speed
-            let windDeg            = decodedData.wind.deg
-            let id                 = decodedData.id
-            debugPrint("json parsed")
-            return WeatherData(coord: coords,
-                               weather: [Weather(id: weatherId,
-                                                 main: weatherMain,
-                                                 description: weatherDescription)],
-                               main: Main(temp: mainTemp,
-                                          feels_like: mainTempFeelsLike,
-                                          temp_min: mainTempMin,
-                                          temp_max: mainTempMax,
-                                          pressure: mainPressure),
-                               wind: Wind(speed: windSpeed,
-                                          deg: windDeg),
-                               id: id,
-                               name: city)
-        } catch {
-            debugPrint("wrong weather")
-            return nil
-        }
-    }
+    
 }
-
