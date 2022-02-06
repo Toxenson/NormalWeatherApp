@@ -6,14 +6,15 @@
 //
 
 import Foundation
+import CoreLocation
 
 protocol WeatherModelProtocol {
     
 }
 
 struct Coordinates: Codable {
-    let lon: Double
-    let lat: Double
+    let lon: CLLocationDegrees?
+    let lat: CLLocationDegrees?
 }
 
 struct Weather: Codable {
@@ -42,6 +43,7 @@ struct WeatherData: Codable {
     let wind: Wind
     let id: Int
     let name: String
+    
     
     static func parseJson(from json: Data) -> WeatherData? {
         debugPrint("also parsing json")
