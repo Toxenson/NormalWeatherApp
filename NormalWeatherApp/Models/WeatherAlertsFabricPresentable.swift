@@ -1,14 +1,15 @@
 //
-//  AlertsFabric.swift
+//  WeatherAlertFabricPresentable.swift
 //  NormalWeatherApp
 //
-//  Created by Тоха on 06.02.2022.
+//  Created by Тоха on 07.02.2022.
 //
 
 import UIKit
 
-struct WeatherAlertsFabric {
-    static func getWarningAlert(title: String, message: String) -> UIViewController {
+struct WeatherAlertsFabricPresentable {
+    
+    private static func getWarningAlert(title: String, message: String) -> UIAlertController {
         let alertController = UIAlertController(title: title,
                                                 message: message,
                                                 preferredStyle: .alert)
@@ -18,5 +19,12 @@ struct WeatherAlertsFabric {
                                         handler: nil)
         alertController.addAction(alertAction)
         return alertController
+    }
+    
+    static func showWarningAlert(in vc: UIViewController, title: String, message: String) {
+        vc.present(getWarningAlert(title: title,
+                                   message: message),
+                   animated: true,
+                   completion: nil)
     }
 }

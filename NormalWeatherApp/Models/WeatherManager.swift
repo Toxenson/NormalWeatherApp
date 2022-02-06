@@ -54,17 +54,21 @@ class WeatherManager {
     private func errorHandler(_ error: NetworkErrors) {
         switch error {
         case .emptyCity:
-            delegate?.didFailWithError(WeatherAlertsFabric.getWarningAlert(title: "Wrong city",
-                                                                    message: "Ops, you typed nonexistent city"))
+            WeatherAlertsFabricPresentable.showWarningAlert(in: delegate as! UIViewController,
+                                                            title: "Wrong city",
+                                                            message: "Ops, you typed nonexistent city")
         case .httpError(let networkError):
-            delegate?.didFailWithError(WeatherAlertsFabric.getWarningAlert(title: "HTTP Error",
-                                                                           message: "Id: \(networkError.cod).\nMessage: \(networkError.message)"))
+            WeatherAlertsFabricPresentable.showWarningAlert(in: delegate as! UIViewController,
+                                                            title: "HTTP Error",
+                                                            message: "Id: \(networkError.cod).\nMessage: \(networkError.message)")
         case .emptyCoordinates:
-            delegate?.didFailWithError(WeatherAlertsFabric.getWarningAlert(title: "Wrong coordinates",
-                                                                    message: "Ops, you are on nonexistent coordinates"))
+            WeatherAlertsFabricPresentable.showWarningAlert(in: delegate as! UIViewController,
+                                                            title: "Wrong coordinates",
+                                                            message: "Ops, you are on nonexistent coordinates")
         default:
-            delegate?.didFailWithError(WeatherAlertsFabric.getWarningAlert(title: "Ops",
-                                                                    message: "Something goes wrong"))
+            WeatherAlertsFabricPresentable.showWarningAlert(in: delegate as! UIViewController,
+                                                            title: "Ops",
+                                                            message: "Something goes wrong")
         }
     }
 }

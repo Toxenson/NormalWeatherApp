@@ -16,8 +16,8 @@
 		CE0504F527ADB8DB009A2601 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0504F427ADB8DB009A2601 /* WeatherModel.swift */; };
 		CE0504F827ADCC77009A2601 /* WeatherManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0504F727ADCC77009A2601 /* WeatherManager.swift */; };
 		CEFE7F6427AE8C53000DFDA2 /* WeatherServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFE7F6327AE8C53000DFDA2 /* WeatherServiceImpl.swift */; };
-		CEFE7F6827B0146F000DFDA2 /* WeatherAlertsFabric.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFE7F6727B0146F000DFDA2 /* WeatherAlertsFabric.swift */; };
 		CEFE7F6A27B01E60000DFDA2 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFE7F6927B01E60000DFDA2 /* NetworkError.swift */; };
+		CEFE7F6C27B07DCF000DFDA2 /* WeatherAlertsFabricPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFE7F6B27B07DCF000DFDA2 /* WeatherAlertsFabricPresentable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,8 +32,8 @@
 		CE0504F427ADB8DB009A2601 /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
 		CE0504F727ADCC77009A2601 /* WeatherManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherManager.swift; sourceTree = "<group>"; };
 		CEFE7F6327AE8C53000DFDA2 /* WeatherServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherServiceImpl.swift; sourceTree = "<group>"; };
-		CEFE7F6727B0146F000DFDA2 /* WeatherAlertsFabric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAlertsFabric.swift; sourceTree = "<group>"; };
 		CEFE7F6927B01E60000DFDA2 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		CEFE7F6B27B07DCF000DFDA2 /* WeatherAlertsFabricPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAlertsFabricPresentable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,8 +92,8 @@
 				CE0504F427ADB8DB009A2601 /* WeatherModel.swift */,
 				CE0504F727ADCC77009A2601 /* WeatherManager.swift */,
 				CEFE7F6327AE8C53000DFDA2 /* WeatherServiceImpl.swift */,
-				CEFE7F6727B0146F000DFDA2 /* WeatherAlertsFabric.swift */,
 				CEFE7F6927B01E60000DFDA2 /* NetworkError.swift */,
+				CEFE7F6B27B07DCF000DFDA2 /* WeatherAlertsFabricPresentable.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -169,9 +169,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEFE7F6C27B07DCF000DFDA2 /* WeatherAlertsFabricPresentable.swift in Sources */,
 				CE0504E427AD7AB8009A2601 /* ViewController.swift in Sources */,
 				CE0504E027AD7AB8009A2601 /* AppDelegate.swift in Sources */,
-				CEFE7F6827B0146F000DFDA2 /* WeatherAlertsFabric.swift in Sources */,
 				CEFE7F6A27B01E60000DFDA2 /* NetworkError.swift in Sources */,
 				CE0504F827ADCC77009A2601 /* WeatherManager.swift in Sources */,
 				CEFE7F6427AE8C53000DFDA2 /* WeatherServiceImpl.swift in Sources */,
