@@ -1,5 +1,5 @@
 //
-//  AppDelegate.swift
+//  AppDelegate.swiftd
 //  NormalWeatherApp
 //
 //  Created by Тоха on 04.02.2022.
