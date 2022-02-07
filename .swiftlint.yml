@@ -1,0 +1,21 @@
+disabled_rules:
+- class_delegate_protocol
+- trailing_whitespace
+- void_return
+line_length:
+- 250 # warning
+- 300 # error
+comment_spacing:
+    severity: error
+trailing_newline:
+    severity: error
+vertical_whitespace:
+    severity: error
+opening_brace:
+    severity: error
+closure_parameter_position:
+    severity: error
+mark:
+    severity: error
+excluded:
+- Pods

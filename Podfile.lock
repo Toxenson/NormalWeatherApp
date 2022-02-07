@@ -1,0 +1,20 @@
+PODS:
+  - PinLayout (1.10.2)
+  - SwiftLint (0.46.2)
+
+DEPENDENCIES:
+  - PinLayout
+  - SwiftLint
+
+SPEC REPOS:
+  trunk:
+    - PinLayout
+    - SwiftLint
+
+SPEC CHECKSUMS:
+  PinLayout: d6b1960e4b182b4da1481b9aa6728f621e20708d
+  SwiftLint: 6bc52a21f0fd44cab9aa2dc8e534fb9f5e3ec507
+
+PODFILE CHECKSUM: 1e96526f9eb837960af93fe8041ebcb0aa270787
+
+COCOAPODS: 1.11.2
