@@ -21,8 +21,8 @@ struct WeatherAlertsFabricPresentable {
         return alertController
     }
     
-    static func showWarningAlert(in vc: UIViewController, title: String, message: String) {
-        vc.present(getWarningAlert(title: title,
+    static func showWarningAlert(in viewController: UIViewController, title: String, message: String) {
+        viewController.present(getWarningAlert(title: title,
                                    message: message),
                    animated: true,
                    completion: nil)

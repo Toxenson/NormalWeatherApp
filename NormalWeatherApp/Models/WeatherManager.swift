@@ -52,21 +52,25 @@ class WeatherManager {
     }
     
     private func errorHandler(_ error: NetworkErrors) {
+        guard let delegate = delegate as? UIViewController else {
+            return
+        }
+        
         switch error {
         case .emptyCity:
-            WeatherAlertsFabricPresentable.showWarningAlert(in: delegate as! UIViewController,
+            WeatherAlertsFabricPresentable.showWarningAlert(in: delegate,
                                                             title: "Wrong city",
                                                             message: "Ops, you typed nonexistent city")
         case .httpError(let networkError):
-            WeatherAlertsFabricPresentable.showWarningAlert(in: delegate as! UIViewController,
+            WeatherAlertsFabricPresentable.showWarningAlert(in: delegate,
                                                             title: "HTTP Error",
                                                             message: "Id: \(networkError.cod).\nMessage: \(networkError.message)")
         case .emptyCoordinates:
-            WeatherAlertsFabricPresentable.showWarningAlert(in: delegate as! UIViewController,
+            WeatherAlertsFabricPresentable.showWarningAlert(in: delegate,
                                                             title: "Wrong coordinates",
                                                             message: "Ops, you are on nonexistent coordinates")
         default:
-            WeatherAlertsFabricPresentable.showWarningAlert(in: delegate as! UIViewController,
+            WeatherAlertsFabricPresentable.showWarningAlert(in: delegate,
                                                             title: "Ops",
                                                             message: "Something goes wrong")
         }

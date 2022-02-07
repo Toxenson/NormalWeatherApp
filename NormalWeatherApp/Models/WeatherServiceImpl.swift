@@ -51,8 +51,7 @@ struct WeatherServiceImpl: WeatherService {
             url: url,
             cachePolicy: .reloadIgnoringLocalCacheData,
             timeoutInterval: 30)
-        URLSession.shared.dataTask(with: urlRequest) {
-            data, urlResponse, error in
+        URLSession.shared.dataTask(with: urlRequest) { data, urlResponse, error in
             let callbackMainThread: (WeatherData?, NetworkErrors?) -> () = { weather, error in
                 DispatchQueue.main.async {
                     completition(weather, error)
@@ -69,7 +68,7 @@ struct WeatherServiceImpl: WeatherService {
             case 404:
                 callbackMainThread(nil, .emptyCity)
             case 200:
-                guard let data = data else{
+                guard let data = data else {
                     callbackMainThread(nil, .unsafeData)
                     return
                 }

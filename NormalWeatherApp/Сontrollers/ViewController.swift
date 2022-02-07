@@ -9,8 +9,8 @@ import UIKit
 import CoreLocation
 
 class ViewController: UIViewController {
-    
-    //MARK: - IBOutlets
+
+// MARK: - IBOutlets
     @IBOutlet private weak var weatherImage: UIImageView!
     @IBOutlet private weak var temperatureLabel: UILabel!
     @IBOutlet private weak var locationLabel: UILabel!
@@ -42,8 +42,8 @@ class ViewController: UIViewController {
         locationManager?.requestWhenInUseAuthorization()
         locationManager?.requestLocation()
     }
-    
-    //MARK: - LifeCycle
+
+// MARK: - LifeCycle
     @IBAction private func test__get_new_coord__when_tap_on_button() {
         weatherManager?.addWeather(for: Coordinates(
             lon: CLLocationDegrees(exactly: Float.random(in: 10...100)),
@@ -65,7 +65,7 @@ class ViewController: UIViewController {
     }
 }
 
-//MARK: - Delegates
+// MARK: - Delegates
 extension ViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 //        debugPrint("method called")
@@ -87,9 +87,9 @@ extension ViewController: CLLocationManagerDelegate {
 extension ViewController: WeatherManagerDelegate {
     func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherData?) {
         temperatureLabel.text = String(format: "%.0f", weather?.main.temp ?? 0) + " °C"
-        feelsLikeLabel.text = String(format: "%.0f", weather?.main.feels_like ?? 0) + " °C"
-        maxTempLabel.text = String(format: "%.0f", weather?.main.temp_max ?? 0) + " °C"
-        minTempLabel.text = String(format: "%.0f", weather?.main.temp_min ?? 0) + " °C"
+        feelsLikeLabel.text = String(format: "%.0f", weather?.main.feelsLike ?? 0) + " °C"
+        maxTempLabel.text = String(format: "%.0f", weather?.main.tempMax ?? 0) + " °C"
+        minTempLabel.text = String(format: "%.0f", weather?.main.tempMin ?? 0) + " °C"
         if weather?.name != "" {
             locationLabel.text = weather?.name
         } else {
@@ -116,6 +116,4 @@ extension ViewController: WeatherManagerDelegate {
                 animated: true,
                 completion: nil)
     }
-    
-    
 }
