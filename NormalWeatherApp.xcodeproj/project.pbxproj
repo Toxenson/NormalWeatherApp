@@ -129,7 +129,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CE0504F027AD7ABA009A2601 /* Build configuration list for PBXNativeTarget "NormalWeatherApp" */;
 			buildPhases = (
-				0CBD048D27B143FF00A26FAC /* ShellScript */,
+				0CBD048D27B143FF00A26FAC /* Run Script */,
 				A8301D861E332016286C38A1 /* [CP] Check Pods Manifest.lock */,
 				CE0504D827AD7AB8009A2601 /* Sources */,
 				CE0504D927AD7AB8009A2601 /* Frameworks */,
@@ -192,7 +192,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0CBD048D27B143FF00A26FAC /* ShellScript */ = {
+		0CBD048D27B143FF00A26FAC /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -201,6 +201,7 @@
 			);
 			inputPaths = (
 			);
+			name = "Run Script";
 			outputFileListPaths = (
 			);
 			outputPaths = (
