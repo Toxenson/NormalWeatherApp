@@ -22,12 +22,20 @@ struct Weather: Codable {
     let description: String
 }
 
-struct Main : Codable {
+struct Main: Codable {
     let temp: Double
-    let feels_like: Double
-    let temp_min: Double
-    let temp_max: Double
+    let feelsLike: Double
+    let tempMin: Double
+    let tempMax: Double
     let pressure: Int
+    
+    private enum CodingKeys: String, CodingKey {
+        case temp
+        case feelsLike = "feels_like"
+        case tempMin = "temp_min"
+        case tempMax = "temp_max"
+        case pressure
+    }
 }
 
 struct Wind: Codable {
@@ -43,7 +51,6 @@ struct WeatherData: Codable {
     let id: Int
     let name: String
     
-    
     static func parseJson(from json: Data) -> WeatherData? {
         debugPrint("also parsing json")
         do {
@@ -55,6 +62,3 @@ struct WeatherData: Codable {
         }
     }
 }
-
-
-
